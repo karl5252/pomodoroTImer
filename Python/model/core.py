@@ -12,9 +12,9 @@ class TomatoMain():
     def __init__(self):
 
         self.task_list = list()
-        self.message = "Hello! Welcome to POMODORO TIMER \n -----------MAIN MENU----------- \n  " \
+        self.message = "Hello! Welcome to POMODORO TIMER \n -----------MAIN MENU----------- \n" \
                        "1. {A}DD TASK \n 2. {L}OAD TASKS \n 3. {S}TART \n" \
-                       " 4. SA{V}E TASKS \n 5. {M}ODIFY TASKS \n 6. {E}XIT \n CURRENT TASK LIST: \n"
+                       "4. SA{V}E TASKS \n 5. {M}ODIFY TASKS \n 6. {E}XIT \n CURRENT TASK LIST: \n"
 
         self.interaction()
 
@@ -70,8 +70,21 @@ class TomatoMain():
             elif task_index <= task_list_length:
                 task = self.task_list[task_index - 1]
                 print(task)
-                new_task_name = input("Please state briefly name of your task: \n")
-                new_task_description = input("Please briefly describe your task: \n")
-                new_task = tuple((new_task_name, new_task_description))
-                self.task_list[task_index - 1] = new_task
+                option = input('Do you want to \n 1. DELETE TASK \n 2. WIPE \n 3. MODIFY')
+                if option.isnumeric():
+                    if option == 1:
+                        print(f'deleting {self.task_list[task_index - 1]}')
+                        del self.task_list[task_index - 1]
+                    elif option == 2:
+                        self.task_list.clear()
+                        print('list of tasks was wiped')
+                    elif option == 3:
+                        new_task_name = input("Please state briefly name of your task: \n")
+                        new_task_description = input("Please briefly describe your task: \n")
+                        new_task = tuple((new_task_name, new_task_description))
+                        self.task_list[task_index - 1] = new_task
+                    else:
+                        print('wrong option')
+                else:
+                    print('option needs to be numeric!')
 
