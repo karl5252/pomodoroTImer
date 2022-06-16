@@ -14,8 +14,8 @@ class TomatoMain():
 
         self.task_list = list()
         self.message = "Hello! Welcome to POMODORO TIMER \n -----------MAIN MENU----------- \n" \
-                       "1. {A}DD TASK \n 2. {L}OAD TASKS \n 3. {S}TART \n" \
-                       "4. SA{V}E TASKS \n 5. {M}ODIFY TASKS \n 6. {E}XIT \n CURRENT TASK LIST: \n"
+                       " 1. {A}DD TASK \n 2. {L}OAD TASKS \n 3. {S}TART \n" \
+                       " 4. SA{V}E TASKS \n 5. {M}ODIFY TASKS \n 6. {E}XIT \n CURRENT TASK LIST: \n"
         self.task_manager = TaskManager()
         self.interaction()
 
