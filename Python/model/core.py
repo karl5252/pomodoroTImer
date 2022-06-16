@@ -2,6 +2,7 @@ import os
 import sys
 
 from Python.model.clock import Clock
+from Python.model.task_manager import TaskManager
 from Python.model.writer import Loader
 
 
@@ -15,7 +16,7 @@ class TomatoMain():
         self.message = "Hello! Welcome to POMODORO TIMER \n -----------MAIN MENU----------- \n" \
                        "1. {A}DD TASK \n 2. {L}OAD TASKS \n 3. {S}TART \n" \
                        "4. SA{V}E TASKS \n 5. {M}ODIFY TASKS \n 6. {E}XIT \n CURRENT TASK LIST: \n"
-
+        self.task_manager = TaskManager()
         self.interaction()
 
     def interaction(self):
@@ -25,7 +26,7 @@ class TomatoMain():
             user_input = self.get_user_choice()
 
             if user_input == 'a' or user_input == 'A':
-                self.update_task_list()
+                self.task_manager.update_task_list(self.task_list)
             elif user_input == 'l' or user_input == 'L':
                 self.task_list = Loader.read()
             elif user_input == 's' or user_input == 'S':
@@ -33,7 +34,7 @@ class TomatoMain():
             elif user_input == 'v' or user_input == 'V':
                 Loader.write(self.task_list)
             elif user_input == 'm' or user_input == 'M':
-                self.modify_task_list()
+                self.task_manager.modify_task_list(self.task_list)
             elif user_input == 'e' or user_input == 'E':
                 print("thank you")
                 break
@@ -43,48 +44,7 @@ class TomatoMain():
     def get_user_choice(self):
         # Let users know what they can do.
         print(self.message)
-        self.print_task_list()
+        self.task_manager.print_task_list(self.task_list)
         return input("Pick your poison\n")
 
-    def update_task_list(self):
-        task_name = input("Please state briefly name of your task: \n")
-        task_description = input("Please briefly describe your task: \n")
-        self.task_list.append(tuple((str(task_name), str(task_description))))
-        return self.task_list
-
-    def print_task_list(self):
-        for count, task in enumerate(self.task_list, 1):
-            print(f'#{count}: {task}')
-
-    def modify_task_list(self):
-        task_list_length = len(self.task_list)
-        self.print_task_list()
-        task_to_change = input()
-        if task_to_change.isnumeric():
-            task_index = int(task_to_change)
-            print(f'your choice: {task_index}')
-            if task_index > task_list_length:
-                print('no such task')
-            elif task_index < 0:
-                print('task number must be zero or positive')
-            elif task_index <= task_list_length:
-                task = self.task_list[task_index - 1]
-                print(task)
-                option = input('Do you want to \n 1. DELETE TASK \n 2. WIPE \n 3. MODIFY')
-                if option.isnumeric():
-                    if option == 1:
-                        print(f'deleting {self.task_list[task_index - 1]}')
-                        del self.task_list[task_index - 1]
-                    elif option == 2:
-                        self.task_list.clear()
-                        print('list of tasks was wiped')
-                    elif option == 3:
-                        new_task_name = input("Please state briefly name of your task: \n")
-                        new_task_description = input("Please briefly describe your task: \n")
-                        new_task = tuple((new_task_name, new_task_description))
-                        self.task_list[task_index - 1] = new_task
-                    else:
-                        print('wrong option')
-                else:
-                    print('option needs to be numeric!')
 
