@@ -41,28 +41,30 @@ def get_task(task_list):
 class TaskManager:
 
     def __init__(self):
-        self.task_list = list()
+
         self.modification_menu_msg = '==MODIFICATION MENU== \n choose option'
 
     def modify_task_list(self, task_list):
+        if len(task_list) == 0:
+            print('no tasks to modify!')
+            return 0
         print(self.modification_menu_msg)
         option = input('Do you want to \n 1. DELETE TASK \n 2. WIPE \n 3. MODIFY \n')
-
         if option.isnumeric():
             if int(option) == 1:
-                task_index = get_task(self.task_list)[1]
-                print(f'deleting {self.task_list[task_index]}')
-                del self.task_list[task_index]
+                task_index = get_task(task_list)[1]
+                print(f'deleting {task_list[task_index]}')
+                del task_list[task_index]
             elif int(option) == 2:
-                self.task_list.clear()
+                task_list.clear()
                 print('list of tasks was wiped')
             elif int(option) == 3:
-                task_from_list = get_task(self.task_list)[0]
-                task_index = get_task(self.task_list)[1]
+                task_from_list = get_task(task_list)[0]
+                task_index = get_task(task_list)[1]
                 new_task_name = input("Please state briefly name of your task: \n")
                 new_task_description = input("Please briefly describe your task: \n")
                 task_from_list.edit_task(new_task_name, new_task_description)
-                self.task_list[task_index] = task_from_list
+                task_list[task_index] = task_from_list
             else:
                 print('wrong option')
         else:
